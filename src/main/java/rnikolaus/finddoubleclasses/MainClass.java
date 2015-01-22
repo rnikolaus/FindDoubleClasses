@@ -36,32 +36,34 @@ public class MainClass {
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 if (attrs.isRegularFile()) {
                     if (isJar(file.toString())) {
-                        parseJar(file.toFile(),file.toString());
+                        parseJar(file.toFile(), file.toString());
                     }
                 }
                 return FileVisitResult.CONTINUE;
             }
 
-            private void parseJar(File file,String originatingPath) throws IOException {
+            private void parseJar(File file, String originatingPath) throws IOException {
                 JarFile jarFile = new JarFile(file);
                 Enumeration<JarEntry> e = jarFile.entries();
                 while (e.hasMoreElements()) {
                     final JarEntry entry = e.nextElement();
                     final String name = entry.getName();
-                    if (isJar(name)){
+                    if (isJar(name)) {
+
                         File temp = File.createTempFile("tmp", null);
                         temp.deleteOnExit();
-                        FileOutputStream st = new FileOutputStream(temp);
-                        InputStream is = jarFile.getInputStream(entry);
-                        IOUtils.copy(is, st);
-                        parseJar(temp,name+" @ "+originatingPath);
-                    }else{
+                        try (FileOutputStream st = new FileOutputStream(temp);
+                                InputStream is = jarFile.getInputStream(entry)) {
+                            IOUtils.copy(is, st);
+                        }
+                        parseJar(temp, name + " @ " + originatingPath);
+                    } else {
                         summarizer.add(name, originatingPath);
                     }
                 }
             }
 
-            private  boolean isJar(String fileName) {
+            private boolean isJar(String fileName) {
                 final String lowerCase = fileName.toLowerCase();
                 return lowerCase.endsWith(".jar")
                         || lowerCase.endsWith(".war")
