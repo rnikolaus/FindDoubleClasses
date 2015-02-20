@@ -22,13 +22,21 @@ public class Summarizer {
         values.get(jarEntry).add(filePath);
     }
 
-    public void printResult() {
-
+    public void printDuplicateResult() {
         for (String jarEntry :getMultipleEntries()) {
             int size = values.get(jarEntry).size();
             
                 System.out.println(jarEntry + " " + size);
                 for (String path:values.get(jarEntry)){
+                    System.out.println("\t"+path);
+                }
+            
+        }
+    }
+    public void printAllResult() {
+        for (Map.Entry<String, List<String>> result :values.entrySet()) {
+                System.out.println(result.getKey());
+                for (String path:result.getValue()){
                     System.out.println("\t"+path);
                 }
             

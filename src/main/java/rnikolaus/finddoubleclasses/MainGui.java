@@ -118,19 +118,22 @@ public class MainGui extends javax.swing.JFrame {
                             summarizerTreePanel2.displaySummarizer(summarizer);
                         }
                     });
+                    summarizer.printAllResult();
                 } catch (IOException ex) {
                     Logger.getLogger(MainGui.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
         t.start();//run the calculation in a separate thread
-        JOptionPane.showMessageDialog(this, "Traversing subdirectories for .ear, .war, .sar and .jar files");
+        JOptionPane.showMessageDialog(this, "Traversing subdirectories for .ear, .war, .sar and .jar files. \nThis may take a while.");
 
 
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
-        JOptionPane.showMessageDialog(this, "This is a little utility that searches for .ear, .war, .sar and .jar files. The containing file names are parsed and displayed, if they occur in more than one file. The idea is to simplify debugging a messed up classpath. ");
+        JOptionPane.showMessageDialog(this, "This is a little utility that searches for .ear, .war, .sar and .jar files. "
+                + "\nThe file names contained in the archives are parsed and displayed if they end with .class and occur in more than one file. "
+                + "\nThe idea is to simplify debugging a messed up classpath. ");
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     public static Summarizer traverseTree(File dir) throws IOException {
