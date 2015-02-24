@@ -111,18 +111,12 @@ public class MainGui extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    final Summarizer summarizer = traverseTree(dir);
-                    SwingUtilities.invokeLater(new Runnable() {//display the result in the swing thread
-                        @Override
-                        public void run() {
-                            summarizerTreePanel2.displaySummarizer(summarizer);
-                        }
-                    });
-                    summarizer.printAllResult();
+                    displayResult(traverseTree(dir));
                 } catch (IOException ex) {
                     Logger.getLogger(MainGui.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
         });
         t.start();//run the calculation in a separate thread
         JOptionPane.showMessageDialog(this, "Traversing subdirectories for .ear, .war, .sar and .jar files. \nThis may take a while.");
@@ -136,10 +130,20 @@ public class MainGui extends javax.swing.JFrame {
                 + "\nThe idea is to simplify debugging a messed up classpath. ");
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
-    public static Summarizer traverseTree(File dir) throws IOException {
+    private Summarizer traverseTree(File dir) throws IOException {
         final JarFileVisitor jarFileVisitor = new JarFileVisitor();
         Files.walkFileTree(dir.toPath(), jarFileVisitor);
         return jarFileVisitor.getSummarizer();
+    }
+
+    private void displayResult(final Summarizer summarizer) {
+        SwingUtilities.invokeLater(new Runnable() {//display the result in the swing thread
+            @Override
+            public void run() {
+                summarizerTreePanel2.displaySummarizer(summarizer);
+            }
+        });
+        summarizer.printAllResult();
     }
 
     /**
