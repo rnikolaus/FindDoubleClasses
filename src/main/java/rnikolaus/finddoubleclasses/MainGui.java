@@ -150,6 +150,7 @@ public class MainGui extends javax.swing.JFrame {
                     Logger.getLogger(MainGui.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
         });
         jLayeredPane1.moveToFront(jProgressBar);
         jProgressBar.setIndeterminate(true);
@@ -165,11 +166,13 @@ public class MainGui extends javax.swing.JFrame {
                 + "\nThe idea is to simplify debugging a messed up classpath. ");
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
-    public static Summarizer traverseTree(File dir) throws IOException {
+    private Summarizer traverseTree(File dir) throws IOException {
         final JarFileVisitor jarFileVisitor = new JarFileVisitor();
         Files.walkFileTree(dir.toPath(), jarFileVisitor);
         return jarFileVisitor.getSummarizer();
     }
+
+    
 
     /**
      * @param args the command line arguments
