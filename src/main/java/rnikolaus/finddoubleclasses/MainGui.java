@@ -31,7 +31,9 @@ public class MainGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        summarizerTreePanel2 = new rnikolaus.finddoubleclasses.SummarizerTreePanel();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        summarizerTreePanel = new rnikolaus.finddoubleclasses.SummarizerTreePanel();
+        jProgressBar = new javax.swing.JProgressBar();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -40,6 +42,29 @@ public class MainGui extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(summarizerTreePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(summarizerTreePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jLayeredPane1.setLayer(summarizerTreePanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jProgressBar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -84,11 +109,11 @@ public class MainGui extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(summarizerTreePanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(summarizerTreePanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -115,7 +140,9 @@ public class MainGui extends javax.swing.JFrame {
                     SwingUtilities.invokeLater(new Runnable() {//display the result in the swing thread
                         @Override
                         public void run() {
-                            summarizerTreePanel2.displaySummarizer(summarizer);
+                            summarizerTreePanel.displaySummarizer(summarizer);
+                            jLayeredPane1.moveToBack(jProgressBar);
+                            jProgressBar.setIndeterminate(false);
                         }
                     });
                     summarizer.printAllResult();
@@ -124,6 +151,8 @@ public class MainGui extends javax.swing.JFrame {
                 }
             }
         });
+        jLayeredPane1.moveToFront(jProgressBar);
+        jProgressBar.setIndeterminate(true);
         t.start();//run the calculation in a separate thread
         JOptionPane.showMessageDialog(this, "Traversing subdirectories for .ear, .war, .sar and .jar files. \nThis may take a while.");
 
@@ -183,9 +212,11 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JProgressBar jProgressBar;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
-    private rnikolaus.finddoubleclasses.SummarizerTreePanel summarizerTreePanel2;
+    private rnikolaus.finddoubleclasses.SummarizerTreePanel summarizerTreePanel;
     // End of variables declaration//GEN-END:variables
 
 }
