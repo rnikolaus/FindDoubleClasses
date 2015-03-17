@@ -1,5 +1,6 @@
 package rnikolaus.finddoubleclasses;
 
+import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -140,7 +141,14 @@ public class MainGui extends javax.swing.JFrame {
                     SwingUtilities.invokeLater(new Runnable() {//display the result in the swing thread
                         @Override
                         public void run() {
-                            summarizerTreePanel.displaySummarizer(summarizer);
+                            if (summarizer.hasDuplicates()) {
+                                summarizerTreePanel.displaySummarizer(summarizer);
+                            } else {
+                                JOptionPane.showMessageDialog(MainGui.this, "No duplicates found");
+                            }
+                            for (Component c : menuBar.getComponents()) {
+                                c.setEnabled(true);
+                            }
                             jLayeredPane1.moveToBack(jProgressBar);
                             jProgressBar.setIndeterminate(false);
                         }
@@ -152,6 +160,9 @@ public class MainGui extends javax.swing.JFrame {
             }
 
         });
+        for (Component c : menuBar.getComponents()) {
+            c.setEnabled(false);
+        }
         jLayeredPane1.moveToFront(jProgressBar);
         jProgressBar.setIndeterminate(true);
         t.start();//run the calculation in a separate thread
@@ -171,8 +182,6 @@ public class MainGui extends javax.swing.JFrame {
         Files.walkFileTree(dir.toPath(), jarFileVisitor);
         return jarFileVisitor.getSummarizer();
     }
-
-    
 
     /**
      * @param args the command line arguments

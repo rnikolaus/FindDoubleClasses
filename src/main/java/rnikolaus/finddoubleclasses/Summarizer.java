@@ -13,15 +13,21 @@ import java.util.TreeSet;
  */
 public class Summarizer {
 
+    private boolean hasDuplicates;
     final private Map<String, List<String>> values = new TreeMap<>();
 
     public void add(String jarEntry, String filePath) {
         if (!values.containsKey(jarEntry)) {
             values.put(jarEntry, new ArrayList<String>());
+        }else{
+            hasDuplicates=true;
         }
         values.get(jarEntry).add(filePath);
     }
 
+    public boolean hasDuplicates(){
+        return hasDuplicates;
+    }
     public void printDuplicateResult() {
         for (String jarEntry :getMultipleEntries()) {
             int size = values.get(jarEntry).size();
